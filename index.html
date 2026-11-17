@@ -7,15 +7,36 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>🐾 Petshop</h1>
-        <p>Cadastro de tutores, pets e atendimentos</p>
+    <header class="site-header">
+        <nav class="topbar" aria-label="Navegação principal">
+            <a class="brand" href="#inicio"><span class="brand-icon">🐾</span><span>au<span class="brand-accent">migo</span><small>PET CARE</small></span></a>
+            <div class="nav-links"><a href="#tutores">Tutores</a><a href="#pets">Pets</a><a href="#atendimentos">Atendimentos</a></div>
+            <a class="nav-cta" href="#pets">Cadastrar pet <span aria-hidden="true">↗</span></a>
+        </nav>
+        <div class="hero" id="inicio">
+            <div class="hero-copy">
+                <span class="eyebrow"><span class="status-dot"></span> CUIDADO QUE VEM DO CORAÇÃO</span>
+                <h1>Um mundo mais <em>feliz</em> para cada patinha.</h1>
+                <p>Organize tutores, cadastre seus melhores amigos e acompanhe cada atendimento com todo o carinho que eles merecem.</p>
+                <div class="hero-actions"><a class="hero-button" href="#pets">Começar cadastro <span>↗</span></a><a class="hero-link" href="#atendimentos">Ver atendimentos <span>→</span></a></div>
+                <div class="hero-note"><span class="hero-note-icon">♥</span><span>Mais amor em cada detalhe.</span></div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="art-blob"></div><div class="art-circle art-circle-one"></div><div class="art-circle art-circle-two"></div>
+                <div class="art-paw art-paw-one">✦</div><div class="art-paw art-paw-two">✳</div>
+                <div class="pet-illustration">🐶</div>
+                <div class="floating-tag floating-tag-one"><span>💚</span> Feito com carinho</div>
+                <div class="floating-tag floating-tag-two"><span>🐾</span> Bem-vindo, aumigo!</div>
+            </div>
+        </div>
+        <div class="hero-wave" aria-hidden="true"></div>
     </header>
-
+    <div class="section-heading"><span class="section-kicker">NOSSO ESPAÇO</span><h2>Tudo para cuidar de quem <em>faz parte da família.</em></h2><p>Gerencie as informações do seu petshop em um só lugar.</p></div>
+    <div id="status-sistema" class="status-sistema" role="status" aria-live="polite" hidden></div>
     <main>
         <!-- TUTORES -->
-        <section class="cartao">
-            <h2>Tutores</h2>
+        <section class="cartao" id="tutores">
+            <div class="card-heading"><span class="card-icon">👩‍💼</span><div><span class="card-kicker">01 · CONEXÕES</span><h2>Tutores</h2><p>Quem cuida dos nossos aumigos</p></div></div>
             <form id="form-tutor">
                 <input type="hidden" id="tutor-id">
                 <input type="text" id="tutor-nome" placeholder="Nome" required>
@@ -24,12 +45,12 @@
                 <button type="submit">Salvar tutor</button>
                 <button type="button" class="cancelar" id="cancelar-tutor" hidden>Cancelar edição</button>
             </form>
-            <ul id="lista-tutores"></ul>
+            <div class="list-heading">Tutores cadastrados <span>↘</span></div><ul id="lista-tutores"></ul>
         </section>
 
         <!-- PETS -->
-        <section class="cartao">
-            <h2>Pets</h2>
+        <section class="cartao" id="pets">
+            <div class="card-heading"><span class="card-icon">🐕</span><div><span class="card-kicker">02 · NOSSOS AMIGOS</span><h2>Pets</h2><p>Pequenos grandes companheiros</p></div></div>
             <form id="form-pet">
                 <input type="hidden" id="pet-id">
                 <input type="text" id="pet-nome" placeholder="Nome do pet" required>
@@ -42,12 +63,12 @@
                 <button type="submit">Salvar pet</button>
                 <button type="button" class="cancelar" id="cancelar-pet" hidden>Cancelar edição</button>
             </form>
-            <ul id="lista-pets"></ul>
+            <div class="list-heading">Pets cadastrados <span>↘</span></div><ul id="lista-pets"></ul>
         </section>
 
         <!-- ATENDIMENTOS -->
-        <section class="cartao">
-            <h2>Atendimentos</h2>
+        <section class="cartao" id="atendimentos">
+            <div class="card-heading"><span class="card-icon">🛁</span><div><span class="card-kicker">03 · TODO CUIDADO</span><h2>Atendimentos</h2><p>Carinho em cada visita</p></div></div>
             <form id="form-atendimento">
                 <input type="hidden" id="atend-id">
                 <input type="text" id="atend-servico" placeholder="Serviço (ex: Banho)" required>
@@ -59,9 +80,11 @@
                 <button type="submit">Salvar atendimento</button>
                 <button type="button" class="cancelar" id="cancelar-atendimento" hidden>Cancelar edição</button>
             </form>
-            <ul id="lista-atendimentos"></ul>
+            <div class="list-heading">Atendimentos registrados <span>↘</span></div><ul id="lista-atendimentos"></ul>
         </section>
     </main>
+
+    <footer><div class="footer-brand">🐾 <strong>aumigo</strong> <span>pet care</span></div><p>Porque cada patinha merece um cuidado especial. <span>♥</span></p></footer>
 
     <!-- o script fica no final, para a página carregar antes -->
     <script src="js/script.js" defer></script>

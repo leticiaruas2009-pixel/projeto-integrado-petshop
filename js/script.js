@@ -2,17 +2,47 @@
 let registros = { tutores: [], pets: [], atendimentos: [] };
 
 async function requisicao(entidade, metodo = "GET", dados = null) {
-    let opcoes = { method: metodo };
+    // PHP precisa ser acessado por HTTP, com Apache/PHP em execução.
+    if (window.location.protocol === "file:") {
+        throw new Error("Abra o projeto pelo XAMPP: http://localhost/Petshop_Organizado_Apostilas/index.html (não abra o arquivo diretamente).");
+    }
+
+    let arquivos = { GET: "read.php", POST: "create.php", PUT: "update.php", DELETE: "delete.php" };
+    let endereco = "php/" + arquivos[metodo] + "?entidade=" + encodeURIComponent(entidade);
+    let opcoes = { method: metodo, cache: "no-store" };
     if (dados !== null) {
         opcoes.headers = { "Content-Type": "application/json" };
         opcoes.body = JSON.stringify(dados);
     }
-    let resposta = await fetch("php/" + ({ GET: "read.php", POST: "create.php", PUT: "update.php", DELETE: "delete.php" }[metodo]) + "?entidade=" + entidade, opcoes);
-    let resultado = await resposta.json();
-    if (!resposta.ok || resultado.sucesso === false) {
-        throw new Error(resultado.erro || "Não foi possível completar a operação.");
+
+    let resposta;
+    try {
+        resposta = await fetch(endereco, opcoes);
+    } catch (erro) {
+        throw new Error("Não foi possível acessar o PHP. Verifique se o Apache está ligado e se o site foi aberto pelo endereço localhost.");
+    }
+
+    // Ler como texto antes de converter: um 404/500 pode devolver HTML, não JSON.
+    let conteudo = await resposta.text();
+    let resultado;
+    try {
+        resultado = JSON.parse(conteudo);
+    } catch (erro) {
+        throw new Error("O servidor não retornou JSON (HTTP " + resposta.status + "). Verifique o caminho " + endereco + ", o Apache e os erros do PHP.");
+    }
+
+    if (!resposta.ok || resultado.sucesso === false || resultado.erro) {
+        throw new Error(resultado.erro || "Não foi possível completar a operação (HTTP " + resposta.status + ").");
     }
     return resultado;
+}
+
+function mostrarStatus(mensagem, erro) {
+    let aviso = document.getElementById("status-sistema");
+    if (!aviso) return;
+    aviso.textContent = mensagem;
+    aviso.className = erro ? "status-sistema status-erro" : "status-sistema status-ok";
+    aviso.hidden = false;
 }
 
 function valor(id) { return document.getElementById(id).value.trim(); }
@@ -74,12 +104,14 @@ async function carregarTudo() {
             criarLinha(listaPets, p.Nome + " (" + p.Especie + ") | Tutor: " + (tutor ? tutor.Nome : p.ID_Tutor), "pets", p);
             opcao(selectPet, p.ID_Pet, p.Nome);
         });
+        mostrarStatus("Conexão com PHP e MySQL realizada. Cadastros carregados.", false);
         registros.atendimentos.forEach(function (a) {
             let pet = registros.pets.find(function (p) { return p.ID_Pet == a.ID_Pet; });
             criarLinha(listaAtendimentos, a.Servico + " | R$ " + Number(a.Valor).toFixed(2).replace(".", ",") + " | " + a.Data_hora + " | Pet: " + (pet ? pet.Nome : a.ID_Pet), "atendimentos", a);
         });
     } catch (erro) {
-        alert("Erro ao carregar dados: " + erro.message);
+        mostrarStatus("Erro ao carregar dados: " + erro.message, true);
+        console.error(erro);
     }
 }
 
@@ -129,7 +161,7 @@ async function excluir(item) {
         await requisicao(item.entidade, "DELETE", { id: item.registro[ids[item.entidade]] });
         limpar(item.entidade);
         await carregarTudo();
-    } catch (erro) { alert(erro.message); }
+    } catch (erro) { mostrarStatus(erro.message, true); alert(erro.message); }
 }
 
 function dadosFormulario(entidade) {
@@ -157,7 +189,7 @@ Object.keys(formularios).forEach(function (entidade) {
             await requisicao(entidade, id ? "PUT" : "POST", dados);
             limpar(entidade);
             await carregarTudo();
-        } catch (erro) { alert(erro.message); }
+        } catch (erro) { mostrarStatus(erro.message, true); alert(erro.message); }
     });
     document.getElementById(config.cancelar).addEventListener("click", function () { limpar(entidade); });
 });
