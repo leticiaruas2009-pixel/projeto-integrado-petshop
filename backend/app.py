@@ -5,11 +5,17 @@ import mysql.connector
 from models import Tutor, Pet, Atendimento
 from dao import TutorDAO, PetDAO, AtendimentoDAO
 
-app = Flask(__name__)
+# static_folder diz onde estão os arquivos do site (a pasta frontend)
+app = Flask(__name__, static_folder="../frontend", static_url_path="")
 
 tutor_dao = TutorDAO()
 pet_dao = PetDAO()
 atendimento_dao = AtendimentoDAO()
+
+# Página inicial: quando abrir 127.0.0.1:5000, mostra o site
+@app.route("/")
+def pagina_inicial():
+    return app.send_static_file("index.html")
 
 
 # ---------- TUTORES ----------
