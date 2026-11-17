@@ -82,3 +82,8 @@ li {
     border-radius: 4px;
     font-size: 14px;
 }
+/* Ações de edição e exclusão */
+.acoes { display: flex; gap: 8px; margin-top: 8px; }
+.acoes button { padding: 6px 10px; font-size: 13px; }
+.cancelar { background: #64748b; }
+[hidden] { display: none !important; }
