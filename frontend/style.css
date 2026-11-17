@@ -1,0 +1,84 @@
+/* Estilo geral da página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f1ec;
+    color: #333;
+}
+
+/* Faixa do topo */
+header {
+    background-color: #2a9d8f;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+header h1 { margin: 0; }
+header p  { margin: 5px 0 0; }
+
+/* Os 3 cartões lado a lado (e um embaixo do outro no celular) */
+main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.cartao {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.cartao h2 {
+    margin-top: 0;
+    color: #2a9d8f;
+}
+
+/* Formulário: um campo embaixo do outro */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #666;
+    gap: 4px;
+}
+input, select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+button {
+    background-color: #e76f51;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+button:hover { background-color: #d65a3a; }
+
+/* Listas de resultados */
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+li {
+    background-color: #f9f7f3;
+    border-left: 4px solid #2a9d8f;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}

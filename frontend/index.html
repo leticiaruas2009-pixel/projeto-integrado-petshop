@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petshop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🐾 Petshop</h1>
+        <p>Cadastro de tutores, pets e atendimentos</p>
+    </header>
+
+    <main>
+        <!-- TUTORES -->
+        <section class="cartao">
+            <h2>Tutores</h2>
+            <form id="form-tutor">
+                <input type="text" id="tutor-nome" placeholder="Nome" required>
+                <input type="text" id="tutor-telefone" placeholder="Telefone">
+                <input type="email" id="tutor-email" placeholder="Email">
+                <button type="submit">Cadastrar tutor</button>
+            </form>
+            <ul id="lista-tutores"></ul>
+        </section>
+
+        <!-- PETS -->
+        <section class="cartao">
+            <h2>Pets</h2>
+            <form id="form-pet">
+                <input type="text" id="pet-nome" placeholder="Nome do pet" required>
+                <input type="text" id="pet-especie" placeholder="Espécie (ex: Cachorro)" required>
+                <input type="text" id="pet-raca" placeholder="Raça">
+                <label>Data de nascimento
+                    <input type="date" id="pet-nascimento">
+                </label>
+                <select id="pet-tutor" required></select>
+                <button type="submit">Cadastrar pet</button>
+            </form>
+            <ul id="lista-pets"></ul>
+        </section>
+
+        <!-- ATENDIMENTOS -->
+        <section class="cartao">
+            <h2>Atendimentos</h2>
+            <form id="form-atendimento">
+                <input type="text" id="atend-servico" placeholder="Serviço (ex: Banho)" required>
+                <label>Data e hora
+                    <input type="datetime-local" id="atend-data" required>
+                </label>
+                <input type="number" id="atend-valor" placeholder="Valor (R$)" step="0.01" min="0" required>
+                <select id="atend-pet" required></select>
+                <button type="submit">Cadastrar atendimento</button>
+            </form>
+            <ul id="lista-atendimentos"></ul>
+        </section>
+    </main>
+
+    <!-- o script fica no final, para a página carregar antes -->
+    <script src="script.js"></script>
+</body>
+</html>
